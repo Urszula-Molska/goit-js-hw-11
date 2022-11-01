@@ -20,12 +20,16 @@ function handlesubmit(event) {
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
+    per_page: 40,
   });
 
   const URL = `https://pixabay.com/api/?${params}`;
 
   fetchPictures(URL).then(pictures => {
     const hits = pictures.hits;
+    console.log(pictures);
+    console.log(hits);
+    console.log(pictures.totalHits);
     if (pictures.totalHits > 0) {
       let markup = '';
       gallery.innerHTML = '';
