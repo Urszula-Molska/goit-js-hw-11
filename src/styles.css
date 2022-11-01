@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
+  height: 45px;
 }
 
 input {
@@ -40,7 +40,7 @@ button:focus {
 }
 
 .gallery {
-  margin-top: 20;
+  margin-top: 15;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -51,22 +51,37 @@ button:focus {
 .img {
   display: block;
   width: auto;
-  max-height: 176px;
-  object-fit: contain;
-  background-color: pink;
+  height: 176px;
+  object-fit: cover;
   margin: 0px;
   padding: 0px;
 }
 
 .photo-card {
-  border-style: solid;
-  border: 5px;
-  border-color: black;
+  height: auto;
+  height: 225px;
+}
 
-  /*display: flex;
+.info {
+  display: flex;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px 5px 10px;
+  height: 30px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+}
+
+/*display: flex;
   flex-direction: column;
   justify-content: space-between;*/
-}
 
 /*mobile*/ /*
 @media screen and (max-width: 767px) {
@@ -86,27 +101,13 @@ button:focus {
 }
 
 
-/*desktop*/
+/*desktop
 
 @media screen and (min-width: 1200px) {
   .gallery {
-    /*flex-basis: calc((100% - 120px) / 4);*/
+    flex-basis: calc((100% - 120px) / 4);
     gap: 30px;
   }
 }
 
 /*.photo-card {}*/
-
-.info {
-  display: flex;
-  width: 263px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.info-item {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-}
