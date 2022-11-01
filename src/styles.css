@@ -54,13 +54,15 @@ button:focus {
   max-height: 176px;
   object-fit: contain;
   background-color: pink;
+  margin: 0px;
+  padding: 0px;
 }
 
 .photo-card {
   border-style: solid;
   border: 5px;
   border-color: black;
-  background-color: aqua;
+
   /*display: flex;
   flex-direction: column;
   justify-content: space-between;*/

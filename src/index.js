@@ -30,7 +30,7 @@ function handlesubmit(event) {
       gallery.innerHTML = '';
       hits.forEach(hit => {
         console.log(hit);
-        markup += `<div class="photo-card" style="height:265px; border-color:black;border:5px;" ><img style="object-fit:contain;" src="${hit.webformatURL}" alt=${hit.tags} loading="lazy" width=263px height:176px 
+        markup += `<div class="photo-card" style="height:250px; border-color:black;border:5px;" ><img style="object-fit:contain;" src="${hit.webformatURL}" alt=${hit.tags} loading="lazy" width=263px max-height:176px 
           />
              <div class="info"><p class="info-item"><b>Likes</b>${hit.likes}
              </p><p class="info-item"><b>Views</b>${hit.views}</p><p class="info-item">
