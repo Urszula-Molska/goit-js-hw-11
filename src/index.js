@@ -7,6 +7,7 @@ const form = document.querySelector('form');
 const gallery = document.querySelector('.gallery');
 let q;
 const photoCard = document.querySelector('.photo-card');
+const loadMore = document.querySelector('.load-more');
 
 form.addEventListener('submit', handlesubmit);
 
@@ -21,6 +22,7 @@ function handlesubmit(event) {
     orientation: 'horizontal',
     safesearch: true,
     per_page: 40,
+    page: 1,
   });
 
   const URL = `https://pixabay.com/api/?${params}`;
@@ -54,8 +56,7 @@ function handlesubmit(event) {
           LightboxGallery.close;
         }
       });
-    }
-    return console.log('0 records');
+    } else return console.log('0 records');
   });
 }
 
@@ -67,6 +68,11 @@ async function fetchPictures(URL) {
   const pictures = await response.json();
   return pictures;
 }
+
+/*loadMore.addEventListener('click', () => {
+        params.page = params.page + 1;
+        console.log(params.page);
+      });*/
 
 /*   webformatURL - link do małego obrazka.
     largeImageURL - link do dużego obrazka.
