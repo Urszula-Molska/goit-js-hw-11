@@ -30,7 +30,8 @@ function handlesubmit(event) {
       gallery.innerHTML = '';
       hits.forEach(hit => {
         console.log(hit);
-        markup += `<div class="photo-card"><img src="${hit.webformatURL}" alt=${hit.tags} loading="lazy" />
+        markup += `<div class="photo-card" style="height:265px; border-color:black;border:5px;" ><img style="object-fit:contain;" src="${hit.webformatURL}" alt=${hit.tags} loading="lazy" width=263px height:176px 
+          />
              <div class="info"><p class="info-item"><b>Likes</b>${hit.likes}
              </p><p class="info-item"><b>Views</b>${hit.views}</p><p class="info-item">
              <b>Comments</b>${hit.comments}</p><p class="info-item"><b>Downloads</b>${hit.downloads}</p>
@@ -78,4 +79,27 @@ async function fetchPictures(URL) {
     return pictures;
   });
   console.log(URL);
+}*/
+//sizes =
+//'(min-width:1200px) calc(33.333vw - 30px), (min-width:768px) calc(50vw - 30px), (min-width: 300px) 100vw';
+
+/*fetchPictures(URL).then(pictures => {
+    console.log(pictures);
+    const hits = pictures.hits;
+    if (pictures.totalHits > 0) {
+      let markup = '';
+      gallery.innerHTML = '';
+      hits.forEach(hit => {
+        console.log(hit);
+        markup += `<div class="photo-card"><img src="${hit.webformatURL}" alt=${hit.tags} loading="lazy" srcset="${hit.webformatURL}" sizes="(min-width:1200px) 400w, (min-width:768px) calc(50vw - 30px), (min-width: 300px) 100vw"
+              />
+             <div class="info"><p class="info-item"><b>Likes</b>${hit.likes}
+             </p><p class="info-item"><b>Views</b>${hit.views}</p><p class="info-item">
+             <b>Comments</b>${hit.comments}</p><p class="info-item"><b>Downloads</b>${hit.downloads}</p>
+             </div></div>`;
+      });
+      return (gallery.innerHTML = markup);
+    }
+    return console.log('0 records');
+  });
 }*/

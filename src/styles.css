@@ -1,3 +1,110 @@
+.search-form {
+  margin: 0 auto;
+  width: 100%;
+  /*max-width: 1200px;*/
+  background-color: rgb(94, 127, 233);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+}
+
+input {
+  border-radius: 3px;
+  margin-right: 8px;
+  border-style: none;
+  padding: 5px;
+}
+
+button {
+  height: 26px;
+  padding: 5px;
+  border-radius: 5px;
+  border-style: none;
+  color: black;
+  background-color: white;
+  border-style: none;
+  cursor: pointer;
+}
+
+button:focus {
+  background-color: blue;
+  color: white;
+}
+
+.body {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 50px;
+}
+
+.gallery {
+  margin-top: 20;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.img {
+  display: block;
+  width: auto;
+  max-height: 176px;
+  object-fit: contain;
+  background-color: pink;
+}
+
+.photo-card {
+  border-style: solid;
+  border: 5px;
+  border-color: black;
+  background-color: aqua;
+  /*display: flex;
+  flex-direction: column;
+  justify-content: space-between;*/
+}
+
+/*mobile*/ /*
+@media screen and (max-width: 767px) {
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+  }
+}
+
+/*tablet*/ /*
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  .gallery {
+    flex-basis: calc((100% - 30px) / 2);
+  }
+}
+
+
+/*desktop*/
+
+@media screen and (min-width: 1200px) {
+  .gallery {
+    /*flex-basis: calc((100% - 120px) / 4);*/
+    gap: 30px;
+  }
+}
+
+/*.photo-card {}*/
+
 .info {
   display: flex;
+  width: 263px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
 }
