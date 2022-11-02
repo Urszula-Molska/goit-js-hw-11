@@ -77,6 +77,17 @@ button:focus {
   text-align: center;
 }
 
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.load-more {
+  background-color: rgb(94, 127, 233);
+  color: white;
+}
+
 /*display: flex;
   flex-direction: column;
   justify-content: space-between;*/

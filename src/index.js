@@ -1,5 +1,5 @@
 import axios, { isCancel, AxiosError } from 'axios';
-import Notiflix from 'notiflix';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
@@ -22,29 +22,35 @@ function handlesubmit(event) {
     console.log(pictures);
     console.log(pictures.totalHits);
     const totalPages = pictures.totalHits / per_page;
+    console.log(totalPages);
     if (pictures.totalHits > 0) {
       renderImages(pictures);
+      Notify.success(`totalHits: ${pictures.totalHits}`);
 
       loadMoreBtn.addEventListener('click', () => {
         // Check the end of the collection to display an alert
         if (page > totalPages) {
-          console.log('re sorry, there are no more posts to load');
+          return Notify.info(
+            "We're sorry, but you've reached the end of search results."
+          );
         }
-
+        page += 1;
         fetchPictures()
           .then(pictures => {
             renderImages(pictures);
             // Increase the group number
-            page += 1;
-
-            // Replace button text after first request
             if (page > 1) {
-              fetchPostsBtn.textContent = 'Fetch more posts';
+              console.log(
+                'Fetch more posts- tu ma się pojawiać przycisk LOAD more'
+              );
             }
           })
           .catch(error => console.log(error));
       });
-    } else return console.log('0 records');
+    } else
+      Notify.info(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
   });
 }
 
