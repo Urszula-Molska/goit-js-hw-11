@@ -1,4 +1,4 @@
-import axios, { isCancel, AxiosError } from 'axios';
+import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -17,6 +17,7 @@ form.addEventListener('submit', handlesubmit);
 
 function handlesubmit(event) {
   event.preventDefault();
+  gallery.innerHTML = '';
   q = form.elements.searchQuery.value;
 
   fetchPictures().then(pictures => {
@@ -95,13 +96,32 @@ async function fetchPictures() {
     page: page,
   });
   const URL = `https://pixabay.com/api/?${params}`;
-  const response = await fetch(`${URL}`);
+  const response = await axios.get(`${URL}`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
   const pictures = await response.json();
   return pictures;
 }
+
+/*async function fetchPictures() {
+  let params = new URLSearchParams({
+    key: '30974723-e837a19c04863567111943fb7',
+    q: q,
+    image_type: 'photo',
+    orientation: 'horizontal',
+    safesearch: true,
+    per_page: per_page,
+    page: page,
+  });
+  const URL = `https://pixabay.com/api/?${params}`;
+  const response = await fetch(`${URL}`);
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  const pictures = await response.json();
+  return pictures;
+}*/
 
 /*loadMoreBtn.classList.remove('is - hidden');*/
 /*const totalPages = pictures.totalHits / params.per_page;*/
