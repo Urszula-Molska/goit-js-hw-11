@@ -87,6 +87,9 @@ button:focus {
   background-color: rgb(94, 127, 233);
   color: white;
 }
+.button-container.is-hidden {
+  display: none;
+}
 
 /*display: flex;
   flex-direction: column;

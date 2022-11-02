@@ -7,6 +7,7 @@ const form = document.querySelector('form');
 const gallery = document.querySelector('.gallery');
 const photoCard = document.querySelector('.photo-card');
 const loadMoreBtn = document.querySelector('.load-more');
+const buttonContainer = document.querySelector('.button-container');
 
 let q;
 let per_page = 40;
@@ -23,34 +24,37 @@ function handlesubmit(event) {
     console.log(pictures.totalHits);
     const totalPages = pictures.totalHits / per_page;
     console.log(totalPages);
+
     if (pictures.totalHits > 0) {
       renderImages(pictures);
       Notify.success(`totalHits: ${pictures.totalHits}`);
-
-      loadMoreBtn.addEventListener('click', () => {
-        // Check the end of the collection to display an alert
-        if (page > totalPages) {
-          return Notify.info(
-            "We're sorry, but you've reached the end of search results."
-          );
-        }
-        page += 1;
-        fetchPictures()
-          .then(pictures => {
-            renderImages(pictures);
-            // Increase the group number
-            if (page > 1) {
-              console.log(
-                'Fetch more posts- tu ma się pojawiać przycisk LOAD more'
-              );
-            }
-          })
-          .catch(error => console.log(error));
-      });
     } else
       Notify.info(
         'Sorry, there are no images matching your search query. Please try again.'
       );
+
+    if (page < totalPages) {
+      buttonContainer.classList.remove('is-hidden');
+      console.log(`${page}`);
+    }
+
+    loadMoreBtn.addEventListener('click', () => {
+      // Check the end of the collection to display an alert
+      page += 1;
+      console.log(page);
+      if (page > totalPages) {
+        buttonContainer.classList.add('is-hidden');
+        return Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
+
+      fetchPictures()
+        .then(pictures => {
+          renderImages(pictures);
+        })
+        .catch(error => console.log(error));
+    });
   });
 }
 
@@ -99,6 +103,7 @@ async function fetchPictures() {
   return pictures;
 }
 
+/*loadMoreBtn.classList.remove('is - hidden');*/
 /*const totalPages = pictures.totalHits / params.per_page;*/
 /*loadMore.addEventListener('click', () => {
         params.page = params.page + 1;
