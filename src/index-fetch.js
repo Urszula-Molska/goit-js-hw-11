@@ -1,4 +1,4 @@
-import axios, { isCancel, AxiosError, Axios } from 'axios';
+import axios, { isCancel, AxiosError } from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -10,35 +10,28 @@ const loadMoreBtn = document.querySelector('.load-more');
 const buttonContainer = document.querySelector('.button-container');
 
 let q;
-let per_page = 3;
-let page = 5;
-let numberOfSubmits = 0;
-
-form.addEventListener('submit', () => {
-  numberOfSubmits += 1;
-  console.log(numberOfSubmits);
-});
+let per_page = 40;
+let page = 1;
 
 form.addEventListener('submit', handlesubmit);
 
 function handlesubmit(event) {
   event.preventDefault();
-  console.log(numberOfSubmits);
-  gallery.innerHTML = '';
   q = form.elements.searchQuery.value;
 
-  fetchPictures().then(function (response) {
-    console.log(response);
-    const totalPages = response.data.totalHits / per_page;
+  fetchPictures().then(pictures => {
+    console.log(pictures);
+    console.log(pictures.totalHits);
+    const totalPages = pictures.totalHits / per_page;
+    console.log(totalPages);
 
-    if ((response.data.totalHits > 0) & (numberOfSubmits === 1)) {
-      renderImages(response);
-      return Notify.success(`totalHits: ${response.data.totalHits}`);
-    }
-    if ((response.data.totalHits > 0) & (numberOfSubmits > 1)) {
-      renderImages(response);
-      Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
-    } else Notify.info('Sorry, there are no images matching your search query. Please try again.');
+    if (pictures.totalHits > 0) {
+      renderImages(pictures);
+      Notify.success(`totalHits: ${pictures.totalHits}`);
+    } else
+      Notify.info(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
 
     if (page < totalPages) {
       buttonContainer.classList.remove('is-hidden');
@@ -57,18 +50,18 @@ function handlesubmit(event) {
       }
 
       fetchPictures()
-        .then(response => {
-          renderImages(response);
+        .then(pictures => {
+          renderImages(pictures);
         })
         .catch(error => console.log(error));
     });
   });
 }
 
-function renderImages(response) {
+function renderImages(pictures) {
   let markup = '';
   gallery.innerHTML = '';
-  const hits = response.data.hits;
+  const hits = pictures.hits;
   hits.forEach(hit => {
     markup += `<div class="photo-card" style="border:gainsboro;border-width:1px;border-style:solid;border-radius:5px"><a class="lightbox" href="${hit.largeImageURL}"><img style="object-fit:cover;" src="${hit.webformatURL}" alt=${hit.tags} loading="lazy" width=263px height="176px" 
           /></a>
@@ -102,32 +95,13 @@ async function fetchPictures() {
     page: page,
   });
   const URL = `https://pixabay.com/api/?${params}`;
-  try {
-    const response = await axios.get(`${URL}`);
-    return response;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-/*async function fetchPictures() {
-  let params = new URLSearchParams({
-    key: '30974723-e837a19c04863567111943fb7',
-    q: q,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: true,
-    per_page: per_page,
-    page: page,
-  });
-  const URL = `https://pixabay.com/api/?${params}`;
   const response = await fetch(`${URL}`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
   const pictures = await response.json();
   return pictures;
-}*/
+}
 
 /*loadMoreBtn.classList.remove('is - hidden');*/
 /*const totalPages = pictures.totalHits / params.per_page;*/
