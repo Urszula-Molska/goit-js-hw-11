@@ -10,14 +10,20 @@ const loadMoreBtn = document.querySelector('.load-more');
 const buttonContainer = document.querySelector('.button-container');
 
 let q;
-let per_page = 3;
-let page = 5;
+let per_page = 40;
+let page = 1;
 let numberOfSubmits = 0;
 
 form.addEventListener('submit', () => {
   numberOfSubmits += 1;
   console.log(numberOfSubmits);
 });
+
+/*function ScrollUp() {*/
+const { height: cardHeight } =
+  gallery.firstElementChild.getBoundingClientRect();
+
+/*}*/
 
 form.addEventListener('submit', handlesubmit);
 
@@ -59,6 +65,10 @@ function handlesubmit(event) {
       fetchPictures()
         .then(response => {
           renderImages(response);
+          window.scrollBy({
+            top: cardHeight * 2,
+            behavior: 'smooth',
+          });
         })
         .catch(error => console.log(error));
     });
@@ -77,7 +87,6 @@ function renderImages(response) {
              <b>Comments</b>${hit.comments}</p><p class="info-item"><b>Downloads</b>${hit.downloads}</p>
              </div></div>`;
   });
-  gallery.innerHTML = markup;
 
   let LightboxGallery = new SimpleLightbox('.gallery a');
   LightboxGallery.on('show.simplelightbox');
@@ -109,48 +118,6 @@ async function fetchPictures() {
     console.error(error);
   }
 }
-
-/*async function fetchPictures() {
-  let params = new URLSearchParams({
-    key: '30974723-e837a19c04863567111943fb7',
-    q: q,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: true,
-    per_page: per_page,
-    page: page,
-  });
-  const URL = `https://pixabay.com/api/?${params}`;
-  const response = await fetch(`${URL}`);
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  const pictures = await response.json();
-  return pictures;
-}*/
-
-/*loadMoreBtn.classList.remove('is - hidden');*/
-/*const totalPages = pictures.totalHits / params.per_page;*/
-/*loadMore.addEventListener('click', () => {
-        params.page = params.page + 1;
-        console.log(params.page);
-      });*/
-
-/*   webformatURL - link do małego obrazka.
-    largeImageURL - link do dużego obrazka.
-    tags - wiersz z opisem obrazka. Będzie pasować do atrybutu alt.
-    likes - liczba lajków.
-    views - liczba wyświetleń.
-    comments - liczba komentarzy.
-    downloads - liczba pobrań.*/
-
-/*form.addEventListener('submit', async () => {
-  try {
-    const pictures = await fetchPictures();
-  } catch (error) {
-    console.log('error catched');
-  }
-});*/
 
 //sizes ='(min-width:1200px) calc(33.333vw - 30px), (min-width:768px) calc(50vw - 30px), (min-width: 300px) 100vw';
 
