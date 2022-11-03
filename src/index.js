@@ -10,7 +10,7 @@ const loadMoreBtn = document.querySelector('.load-more');
 const buttonContainer = document.querySelector('.button-container');
 
 let q;
-let per_page = 40;
+let per_page = 10;
 let page = 1;
 let numberOfSubmits = 0;
 
@@ -63,13 +63,7 @@ function handlesubmit(event) {
       fetchPictures()
         .then(response => {
           renderImages(response);
-          const { height: cardHeight } =
-            gallery.firstElementChild.getBoundingClientRect();
-
-          window.scrollBy({
-            top: cardHeight * 2,
-            behavior: 'smooth',
-          });
+          console.log('co jest?');
         })
         .catch(error => console.log(error));
     });
@@ -78,7 +72,6 @@ function handlesubmit(event) {
 
 function renderImages(response) {
   let markup = '';
-  gallery.innerHTML = '';
   const hits = response.data.hits;
   hits.forEach(hit => {
     markup += `<div class="photo-card" style="border:gainsboro;border-width:1px;border-style:solid;border-radius:5px"><a class="lightbox" href="${hit.largeImageURL}"><img style="object-fit:cover;" src="${hit.webformatURL}" alt=${hit.tags} loading="lazy" width=263px height="176px" 
@@ -88,11 +81,13 @@ function renderImages(response) {
              <b>Comments</b>${hit.comments}</p><p class="info-item"><b>Downloads</b>${hit.downloads}</p>
              </div></div>`;
   });
-  gallery.innerHTML = markup;
+
+  gallery.insertAdjacentHTML('beforeend', markup);
 
   let LightboxGallery = new SimpleLightbox('.gallery a');
   LightboxGallery.on('show.simplelightbox');
   LightboxGallery.defaultOptions.captionsData = 'alt';
+  LightboxGallery.refresh();
 
   LightboxGallery.defaultOptions.captionDelay = 250;
   document.addEventListener('keyup', event => {
@@ -143,3 +138,11 @@ async function fetchPictures() {
     return console.log('0 records');
   });
 }*/
+
+/*const { height: cardHeight } =
+  gallery.firstElementChild.getBoundingClientRect();
+
+window.scrollBy({
+  top: cardHeight * 2,
+  behavior: 'smooth',
+});*/
