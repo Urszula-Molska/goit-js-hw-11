@@ -13,10 +13,10 @@ let q;
 let per_page = 10;
 let page = 1;
 let numberOfSubmits = 0;
+let totalPages;
 
 form.addEventListener('submit', () => {
   numberOfSubmits += 1;
-  console.log(numberOfSubmits);
 });
 
 /*function ScrollUp() {*/
@@ -27,17 +27,16 @@ form.addEventListener('submit', handlesubmit);
 
 function handlesubmit(event) {
   event.preventDefault();
-  console.log(numberOfSubmits);
   gallery.innerHTML = '';
   q = form.elements.searchQuery.value;
 
   fetchPictures().then(function (response) {
-    console.log(response);
-    const totalPages = response.data.totalHits / per_page;
+    totalPages = response.data.totalHits / per_page;
 
     if (page < totalPages) {
       buttonContainer.classList.remove('is-hidden');
-      console.log(`${page}`);
+      console.log(`page:${page}`);
+      console.log(`totalPages:${totalPages}`);
     }
 
     if ((response.data.totalHits > 0) & (numberOfSubmits === 1)) {
@@ -48,25 +47,33 @@ function handlesubmit(event) {
       renderImages(response);
       Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
     } else Notify.info('Sorry, there are no images matching your search query. Please try again.');
+  });
 
-    loadMoreBtn.addEventListener('click', () => {
-      // Check the end of the collection to display an alert
-      page += 1;
-      console.log(page);
-      if (page > totalPages) {
-        buttonContainer.classList.add('is-hidden');
-        return Notify.info(
-          "We're sorry, but you've reached the end of search results."
-        );
-      }
+  loadMoreBtn.addEventListener('click', () => {
+    // Check the end of the collection to display an alert
+    page += 1;
+    console.log(`page:${page}`);
+    if (page > totalPages) {
+      buttonContainer.classList.add('is-hidden');
+      return Notify.info(
+        "We're sorry, but you've reached the end of search results."
+      );
+    }
 
-      fetchPictures()
-        .then(response => {
-          renderImages(response);
-          console.log('co jest?');
-        })
-        .catch(error => console.log(error));
-    });
+    fetchPictures()
+      .then(function (response) {
+        renderImages(response);
+        //Scroll function
+        const { height: cardHeight } = document
+          .querySelector('.gallery')
+          .firstElementChild.getBoundingClientRect();
+
+        window.scrollBy({
+          top: cardHeight * 2,
+          behavior: 'smooth',
+        });
+      })
+      .catch(error => console.log(error));
   });
 }
 
