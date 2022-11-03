@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { isCancel, AxiosError, Axios } from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
@@ -20,19 +20,16 @@ function handlesubmit(event) {
   gallery.innerHTML = '';
   q = form.elements.searchQuery.value;
 
-  fetchPictures().then(pictures => {
-    console.log(pictures);
-    console.log(pictures.totalHits);
-    const totalPages = pictures.totalHits / per_page;
+  fetchPictures().then(function (response) {
+    console.log(response);
+    console.log(response.data.totalHits);
+    const totalPages = response.data.totalHits / per_page;
     console.log(totalPages);
 
-    if (pictures.totalHits > 0) {
-      renderImages(pictures);
-      Notify.success(`totalHits: ${pictures.totalHits}`);
-    } else
-      Notify.info(
-        'Sorry, there are no images matching your search query. Please try again.'
-      );
+    if (response.data.totalHits > 0) {
+      renderImages(response);
+      Notify.success(`totalHits: ${response.data.totalHits}`);
+    } else Notify.info('Sorry, there are no images matching your search query. Please try again.');
 
     if (page < totalPages) {
       buttonContainer.classList.remove('is-hidden');
@@ -51,18 +48,18 @@ function handlesubmit(event) {
       }
 
       fetchPictures()
-        .then(pictures => {
-          renderImages(pictures);
+        .then(response => {
+          renderImages(response);
         })
         .catch(error => console.log(error));
     });
   });
 }
 
-function renderImages(pictures) {
+function renderImages(response) {
   let markup = '';
   gallery.innerHTML = '';
-  const hits = pictures.hits;
+  const hits = response.data.hits;
   hits.forEach(hit => {
     markup += `<div class="photo-card" style="border:gainsboro;border-width:1px;border-style:solid;border-radius:5px"><a class="lightbox" href="${hit.largeImageURL}"><img style="object-fit:cover;" src="${hit.webformatURL}" alt=${hit.tags} loading="lazy" width=263px height="176px" 
           /></a>
@@ -96,12 +93,12 @@ async function fetchPictures() {
     page: page,
   });
   const URL = `https://pixabay.com/api/?${params}`;
-  const response = await axios.get(`${URL}`);
-  if (!response.ok) {
-    throw new Error(response.statusText);
+  try {
+    const response = await axios.get(`${URL}`);
+    return response;
+  } catch (error) {
+    console.error(error);
   }
-  const pictures = await response.json();
-  return pictures;
 }
 
 /*async function fetchPictures() {

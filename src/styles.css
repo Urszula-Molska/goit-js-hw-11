@@ -81,12 +81,22 @@ button:focus {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .load-more {
+  background-color: rgb(218, 218, 223);
+  color: black;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.load-more:focus {
   background-color: rgb(94, 127, 233);
   color: white;
 }
+
 .button-container.is-hidden {
   display: none;
 }
