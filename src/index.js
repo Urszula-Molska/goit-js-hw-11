@@ -20,8 +20,6 @@ form.addEventListener('submit', () => {
 });
 
 /*function ScrollUp() {*/
-const { height: cardHeight } =
-  gallery.firstElementChild.getBoundingClientRect();
 
 /*}*/
 
@@ -37,6 +35,11 @@ function handlesubmit(event) {
     console.log(response);
     const totalPages = response.data.totalHits / per_page;
 
+    if (page < totalPages) {
+      buttonContainer.classList.remove('is-hidden');
+      console.log(`${page}`);
+    }
+
     if ((response.data.totalHits > 0) & (numberOfSubmits === 1)) {
       renderImages(response);
       return Notify.success(`totalHits: ${response.data.totalHits}`);
@@ -45,11 +48,6 @@ function handlesubmit(event) {
       renderImages(response);
       Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
     } else Notify.info('Sorry, there are no images matching your search query. Please try again.');
-
-    if (page < totalPages) {
-      buttonContainer.classList.remove('is-hidden');
-      console.log(`${page}`);
-    }
 
     loadMoreBtn.addEventListener('click', () => {
       // Check the end of the collection to display an alert
@@ -65,6 +63,9 @@ function handlesubmit(event) {
       fetchPictures()
         .then(response => {
           renderImages(response);
+          const { height: cardHeight } =
+            gallery.firstElementChild.getBoundingClientRect();
+
           window.scrollBy({
             top: cardHeight * 2,
             behavior: 'smooth',
@@ -87,6 +88,7 @@ function renderImages(response) {
              <b>Comments</b>${hit.comments}</p><p class="info-item"><b>Downloads</b>${hit.downloads}</p>
              </div></div>`;
   });
+  gallery.innerHTML = markup;
 
   let LightboxGallery = new SimpleLightbox('.gallery a');
   LightboxGallery.on('show.simplelightbox');
