@@ -1,13 +1,16 @@
 .container {
-}
-
-.search-form {
-  height: 45px;
-  /*position: fixed;*/
+  margin: 0px;
+  padding: 0ppx;
   background-color: rgb(94, 127, 233);
+  height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 1200px;
+  position: fixed;
 }
 
 input {
@@ -41,7 +44,7 @@ button:focus {
 }
 
 .gallery {
-  margin-top: 15;
+  margin-top: 50px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
