@@ -8,9 +8,13 @@
   align-items: center;
   position: fixed;
   top: 0px;
-  left: 0px;
-  width: 100vw;
+  /*left: calc(50vw - 50%);*/
+  width: 1200px;
   position: fixed;
+}
+.search-form {
+  position: relative;
+  left: calc(50vw - 50%);
 }
 
 input {
