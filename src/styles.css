@@ -1,13 +1,13 @@
 .container {
-  position: fixed;
-  background-color: rgb(94, 127, 233);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .search-form {
   height: 45px;
+  /*position: fixed;*/
+  background-color: rgb(94, 127, 233);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 input {
