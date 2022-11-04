@@ -9,7 +9,7 @@ const photoCard = document.querySelector('.photo-card');
 const loadMoreBtn = document.querySelector('.load-more');
 const buttonContainer = document.querySelector('.button-container');
 
-let q;
+let search_term;
 let per_page = 10;
 let page = 1;
 let numberOfSubmits = 0;
@@ -28,7 +28,7 @@ form.addEventListener('submit', handlesubmit);
 function handlesubmit(event) {
   event.preventDefault();
   gallery.innerHTML = '';
-  q = form.elements.searchQuery.value;
+  search_term = form.elements.searchQuery.value;
 
   fetchPictures().then(function (response) {
     totalPages = response.data.totalHits / per_page;
@@ -107,7 +107,7 @@ function renderImages(response) {
 async function fetchPictures() {
   let params = new URLSearchParams({
     key: '30974723-e837a19c04863567111943fb7',
-    q: q,
+    q: search_term,
     image_type: 'photo',
     orientation: 'horizontal',
     safesearch: true,
