@@ -11,6 +11,7 @@
   /*left: calc(50vw - 50%);*/
   width: 1200px;
   position: fixed;
+  left: calc(50vw - 50%);
 }
 .search-form {
   position: relative;
