@@ -9,7 +9,7 @@
   position: fixed;
   top: 0px;
   /*left: calc(50vw - 50%);*/
-  width: 1200px;
+  width: 100%;
   position: fixed;
   left: calc(50vw - 50%);
 }
